@@ -5,7 +5,13 @@ require('dotenv').config();
 
 // Express server
 const app = express();
-app.use(cors());
+app.use(cors(
+  {
+    origin: ["https://youtube-to-mp3-one.vercel.app/"],
+    methods: ["POST", "GET"],
+    credentials: true
+  }
+));
 
 // PORT
 const PORT = process.env.PORT || 8000;
