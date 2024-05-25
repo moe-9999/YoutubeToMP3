@@ -26,7 +26,7 @@ const MainPage = () => {
 
       console.log('Video ID:', videoID);
 
-      const response = await axios.post('https://youtube-to-mp-3-rose.vercel.app/', {
+      const response = await axios.post('https://youtube-to-mp-3-rose.vercel.app/api', {
         videoID,
       });
 
