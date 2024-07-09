@@ -5,13 +5,7 @@ require('dotenv').config();
 
 // Express server
 const app = express();
-app.use(cors(
-  {
-    origin: ["https://youtube-to-mp3-one.vercel.app/"],
-    methods: ["POST", "GET"],
-    credentials: true
-  }
-));
+app.use(cors());
 
 // PORT
 const PORT = process.env.PORT || 8000;
@@ -20,34 +14,40 @@ const PORT = process.env.PORT || 8000;
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-
 app.post('/api', async (req, res) => {
   const videoID = req.body.videoID;
+
   if (!videoID || videoID.trim() === '') {
     return res.json({ success: false, message: 'Please enter another URL' });
   } else {
     try {
-      const fetchAPI = await fetch(`https://youtube-mp36.p.rapidapi.com/dl?id=${videoID}`, {
-        method: "GET",
-        headers: {
-          'X-RapidAPI-Key': process.env.API_KEY,
-          'X-RapidAPI-Host': process.env.API_HOST
+      const response = await axios.get(
+        `https://youtube-mp36.p.rapidapi.com/dl?id=${videoID}`,
+        {
+          headers: {
+            'X-RapidAPI-Key': process.env.API_KEY,
+            'X-RapidAPI-Host': process.env.API_HOST,
+          },
         }
-      });
+      );
 
-      const fetchResponse = await fetchAPI.json();
+      // Assuming the API returns JSON directly
+      const fetchResponse = response.data;
 
-      console.log(fetchResponse)
+      console.log(fetchResponse);
 
       // Send the fetchResponse back to the React frontend
-      return res.json({ success: true, message: 'Successfully fetched data', data: fetchResponse });
+      return res.json({
+        success: true,
+        message: 'Successfully fetched data',
+        data: fetchResponse,
+      });
     } catch (error) {
-      console.error('Fetch error:', error);
+      console.error('Fetch error:', error.message);
       return res.json({ success: false, message: 'Error fetching data' });
     }
   }
 });
-
 
 // START APPLICATION
 app.listen(PORT, () => {
