@@ -14,7 +14,7 @@ const PORT = process.env.PORT || 8000;
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-app.post('/api', async (req, res) => {
+app.post('/server', async (req, res) => {
   const videoID = req.body.videoID;
 
   if (!videoID || videoID.trim() === '') {
