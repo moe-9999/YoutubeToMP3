@@ -19,11 +19,12 @@ app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
   res.header('Access-Control-Allow-Headers', 'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version');
+  
   if (req.method === 'OPTIONS') {
     res.sendStatus(200); // Respond OK to OPTIONS requests
-  } else {
-    next();
   }
+  
+  next();
 });
 
 app.post('/server', async (req, res) => { 
