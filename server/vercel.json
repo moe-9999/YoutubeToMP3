@@ -1,7 +1,7 @@
 {
   "version": 2,
   "builds": [
-    { "src": "**/*.cjs", "use": "@vercel/node" }
+    { "src": "/*.cjs", "use": "@vercel/node" }
   ],
   "headers": [
     {
